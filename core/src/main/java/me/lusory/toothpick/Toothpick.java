@@ -17,15 +17,28 @@
 
 package me.lusory.toothpick;
 
+import me.lusory.toothpick.util.Key;
+
+import javax.inject.Provider;
 import java.util.Arrays;
 import java.util.Collection;
 
 public interface Toothpick {
-    static Toothpick of(Class<?>... classes) {
-        return of(Arrays.asList(classes));
+    static Toothpick of(Object... modules) {
+        return of(Arrays.asList(modules));
     }
 
-    static Toothpick of(Collection<Class<?>> classes) {
-        return new ToothpickImpl(classes);
+    static Toothpick of(Collection<Object> modules) {
+        return new ToothpickImpl(modules);
     }
+
+    <T> T instance(Class<T> type);
+
+    <T> T instance(Key<T> key);
+
+    <T> Provider<T> provider(Class<T> type);
+
+    <T> Provider<T> provider(Key<T> key);
+
+    void injectFields(Object target);
 }

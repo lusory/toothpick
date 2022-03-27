@@ -5,7 +5,8 @@ plugins {
 }
 
 dependencies {
-    implementation(group = "org.jetbrains", name = "annotations", version = DependencyVersions.JB_ANNOTATIONS)
+    api(group = "javax.inject", name = "javax.inject", version = DependencyVersions.JAVAX_INJECT)
+    compileOnly(group = "org.jetbrains", name = "annotations", version = DependencyVersions.JB_ANNOTATIONS)
 
     testImplementation(group = "org.junit.jupiter", name = "junit-jupiter-api", version = DependencyVersions.JUNIT)
     testRuntimeOnly(group = "org.junit.jupiter", name = "junit-jupiter-engine", version = DependencyVersions.JUNIT)
