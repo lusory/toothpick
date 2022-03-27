@@ -15,15 +15,14 @@
  * limitations under the License.
  */
 
-package me.lusory.toothpick.test.mock;
+package me.lusory.toothpick.exceptions;
 
-import me.lusory.toothpick.annotations.Autowired;
-import me.lusory.toothpick.annotations.Component;
+public class CyclicDependencyException extends RuntimeException {
+    public CyclicDependencyException() {
+        super();
+    }
 
-@Component("exampleClass1")
-public class ExampleClass1 {
-    @Autowired
-    public ExampleClass1(ExampleClass2 exampleClass2) {
-        System.out.println(exampleClass2.toString());
+    public CyclicDependencyException(String message) {
+        super(message);
     }
 }

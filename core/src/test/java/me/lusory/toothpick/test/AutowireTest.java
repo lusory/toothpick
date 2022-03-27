@@ -18,13 +18,24 @@
 package me.lusory.toothpick.test;
 
 import me.lusory.toothpick.Toothpick;
+import me.lusory.toothpick.exceptions.DuplicateNameException;
 import me.lusory.toothpick.test.mock.ExampleClass1;
 import me.lusory.toothpick.test.mock.ExampleClass2;
+import me.lusory.toothpick.test.mock.ExampleClass3;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 public class AutowireTest {
     @Test
     void autowire() {
         Toothpick.of(ExampleClass1.class, ExampleClass2.class);
+    }
+
+    @Test
+    void duplicateName() {
+        Assertions.assertThrows(
+                DuplicateNameException.class,
+                () -> Toothpick.of(ExampleClass1.class, ExampleClass2.class, ExampleClass3.class)
+        );
     }
 }

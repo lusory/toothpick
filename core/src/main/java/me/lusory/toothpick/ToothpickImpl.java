@@ -20,16 +20,14 @@ package me.lusory.toothpick;
 import me.lusory.toothpick.annotations.Autowired;
 import me.lusory.toothpick.annotations.Component;
 import me.lusory.toothpick.annotations.Named;
-import me.lusory.toothpick.exceptions.DuplicateNameException;
-import me.lusory.toothpick.exceptions.NoAutowiringConstructorFound;
-import me.lusory.toothpick.exceptions.RuntimeInstantiationException;
-import me.lusory.toothpick.exceptions.UnsatisfiedDependencyException;
+import me.lusory.toothpick.exceptions.*;
 import me.lusory.toothpick.util.Assertions;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Parameter;
 import java.util.*;
+import java.util.stream.Collectors;
 
 class ToothpickImpl implements Toothpick {
     private final Map<String, Object> instances = new HashMap<>();
@@ -43,7 +41,7 @@ class ToothpickImpl implements Toothpick {
                 continue;
             }
 
-            doAutowire(clazz);
+            doAutowire(clazz, new ArrayList<>());
         }
     }
 
@@ -62,13 +60,18 @@ class ToothpickImpl implements Toothpick {
     }
 
     private String[] resolveNames(Class<?> clazz) {
-        return clazz.isAnnotationPresent(Component.class)
-                ? clazz.getAnnotation(Component.class).value()
-                : new String[] { clazz.getSimpleName() + (getCount(clazz) + 1) };
+        String[] names = null;
+        if (clazz.isAnnotationPresent(Component.class)) {
+            names = clazz.getAnnotation(Component.class).value();
+        }
+        if (names == null || names.length == 0) {
+            names = new String[] { clazz.getSimpleName() + (getCount(clazz) + 1) };
+        }
+        return names;
     }
 
     private Constructor<?> resolveAutowiringConstructor(Class<?> clazz) {
-        for (final Constructor<?> ctor : clazz.getDeclaredConstructors()) { // fuck super class constructors
+        for (final Constructor<?> ctor : clazz.getDeclaredConstructors()) {
             if (ctor.isAnnotationPresent(Autowired.class)) {
                 return ctor;
             }
@@ -76,7 +79,7 @@ class ToothpickImpl implements Toothpick {
         return null;
     }
 
-    private Object doAutowire(Class<?> clazz) {
+    private Object doAutowire(Class<?> clazz, List<Class<?>> dependencyStack) {
         final Constructor<?> ctor = resolveAutowiringConstructor(clazz);
         Constructor<?> noArgCtor = null;
         try {
@@ -97,11 +100,21 @@ class ToothpickImpl implements Toothpick {
 
         ctor.setAccessible(true);
 
+        dependencyStack.add(clazz);
+
         // resolve dependencies
         final List<Object> paramInstances = new ArrayList<>();
         for (final Parameter param : ctor.getParameters()) {
             if (!hasClass(param.getType())) {
                 throw new UnsatisfiedDependencyException(param.getType().getName());
+            }
+
+            if (dependencyStack.contains(param.getType())) {
+                throw new CyclicDependencyException(
+                        "Cyclic dependency while resolving parameter " + param.getType().getName()
+                                + " of constructor of class " + clazz.getName() + ", dependency stack: ["
+                                + dependencyStack.stream().map(Class::getName).collect(Collectors.joining(", ")) + "]"
+                );
             }
 
             if (param.isAnnotationPresent(Named.class)) {
@@ -111,10 +124,14 @@ class ToothpickImpl implements Toothpick {
                 if (instance != null && param.getType().isAssignableFrom(instance.getClass())) {
                     paramInstances.add(instance);
                 } else {
-                    paramInstances.add(Assertions.throwIfNull(doAutowire(param.getType()), NoAutowiringConstructorFound.class)); // not sure about this one, check later
+                    paramInstances.add(
+                            Assertions.throwIfNull(doAutowire(param.getType(), dependencyStack), NoAutowiringConstructorFound.class)
+                    ); // not sure about this one, check later
                 }
             } else {
-                paramInstances.add(Assertions.throwIfNull(doAutowire(param.getType()), NoAutowiringConstructorFound.class)); // not sure about this one, check later
+                paramInstances.add(
+                        Assertions.throwIfNull(doAutowire(param.getType(), dependencyStack), NoAutowiringConstructorFound.class)
+                ); // not sure about this one, check later
             }
         }
 
