@@ -3,5 +3,5 @@ package me.lusory.toothpick.exceptions;
 import lombok.experimental.StandardException;
 
 @StandardException
-public class CircularDependencyException extends DependencyResolveException {
+public class InjectorException extends RuntimeException {
 }

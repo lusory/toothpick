@@ -23,13 +23,13 @@ import javax.inject.Provider;
 import java.util.Arrays;
 import java.util.Collection;
 
-public interface Toothpick {
-    static Toothpick of(Object... modules) {
+public interface Injector {
+    static Injector of(Object... modules) {
         return of(Arrays.asList(modules));
     }
 
-    static Toothpick of(Collection<Object> modules) {
-        return new ToothpickImpl(modules);
+    static Injector of(Collection<Object> modules) {
+        return new InjectorImpl(modules);
     }
 
     <T> T instance(Class<T> type);
@@ -39,6 +39,4 @@ public interface Toothpick {
     <T> Provider<T> provider(Class<T> type);
 
     <T> Provider<T> provider(Key<T> key);
-
-    void injectFields(Object target);
 }
