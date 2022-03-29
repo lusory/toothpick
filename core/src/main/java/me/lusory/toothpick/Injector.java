@@ -17,9 +17,12 @@
 
 package me.lusory.toothpick;
 
-import me.lusory.toothpick.util.Key;
+import org.jetbrains.annotations.Nullable;
 
+import javax.inject.Named;
 import javax.inject.Provider;
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Type;
 import java.util.Arrays;
 import java.util.Collection;
 
@@ -32,11 +35,34 @@ public interface Injector {
         return new InjectorImpl(modules);
     }
 
-    <T> T instance(Class<T> type);
+    default <T> T instance(Type type) {
+        return instance(type, null, null);
+    }
 
-    <T> T instance(Key<T> key);
+    default <T> T instance(Type type, @Nullable String name) {
+        return instance(type, name, Named.class);
+    }
 
-    <T> Provider<T> provider(Class<T> type);
+    default <T> T instance(Type type, @Nullable Class<? extends Annotation> qualifier) {
+        return instance(type, null, qualifier);
+    }
 
-    <T> Provider<T> provider(Key<T> key);
+    @SuppressWarnings("unchecked")
+    default <T> T instance(Type type, @Nullable String name, @Nullable Class<? extends Annotation> qualifier) {
+        return (T) provider(type, name, qualifier).get();
+    }
+
+    default <T> Provider<T> provider(Type type) {
+        return provider(type, null, null);
+    }
+
+    default <T> Provider<T> provider(Type type, @Nullable String name) {
+        return provider(type, name, Named.class);
+    }
+
+    default <T> Provider<T> provider(Type type, @Nullable Class<? extends Annotation> qualifier) {
+        return provider(type, null, qualifier);
+    }
+
+    <T> Provider<T> provider(Type type, @Nullable String name, @Nullable Class<? extends Annotation> qualifier);
 }
