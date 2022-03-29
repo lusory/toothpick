@@ -1,4 +1,4 @@
-package me.lusory.toothpick.test.mock;
+package me.lusory.toothpick.jmh.mock;
 
 import javax.inject.Inject;
 
