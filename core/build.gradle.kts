@@ -16,6 +16,7 @@ dependencies {
     jmh(group = "org.openjdk.jmh", name = "jmh-generator-annprocess", version = DependencyVersions.JMH)
 
     jmh(group = "org.codejargon.feather", name = "feather", version = DependencyVersions.FEATHER)
+    jmh(group = "com.google.inject", name = "guice", version = DependencyVersions.GUICE)
 }
 
 /*
@@ -23,10 +24,6 @@ tasks.withType<Test> {
     useJUnitPlatform()
 }
 */
-
-jmh {
-    excludes.add("injectFeather")
-}
 
 java {
     toolchain {

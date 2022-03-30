@@ -6,4 +6,5 @@ object DependencyVersions {
     // const val JUNIT = "5.8.2"
     const val JMH = "1.35"
     const val FEATHER = "1.0"
+    const val GUICE = "5.1.0"
 }
