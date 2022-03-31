@@ -5,7 +5,7 @@ plugins {
 }
 
 allprojects {
-    group = "me.lusory"
+    group = "me.lusory.toothpick"
     version = "0.0.1-SNAPSHOT"
 }
 
@@ -30,7 +30,7 @@ subprojects {
                 from(components["java"])
                 pom {
                     name.set("toothpick")
-                    description.set("A lightweight dependency injection framework for Java")
+                    description.set("A simple, lightweight dependency injection framework for JVM based languages")
                     url.set("https://github.com/lusory/toothpick")
                     licenses {
                         license {
