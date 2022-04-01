@@ -7,4 +7,5 @@ object DependencyVersions {
     const val JMH = "1.35"
     const val FEATHER = "1.0"
     const val GUICE = "5.1.0"
+    const val KOTLIN = "1.6.10"
 }
