@@ -61,7 +61,7 @@ class InjectorImpl implements Injector {
     }
 
     private void populateMethod(Supplier<Object> module, Method method) {
-        if (method.isAnnotationPresent(Provides.class)) {
+        if (hasAnnotation(method.getAnnotations(), Provides.class)) {
             method.setAccessible(true);
 
             final Type returnType = method.getGenericReturnType();
@@ -90,7 +90,7 @@ class InjectorImpl implements Injector {
                                     throw new DependencyResolveException(e);
                                 }
                             },
-                            method.isAnnotationPresent(Singleton.class) || method.getReturnType().isAnnotationPresent(Singleton.class)
+                            hasAnnotation(method.getAnnotations(), Singleton.class)
                     )
             );
         }
@@ -165,7 +165,7 @@ class InjectorImpl implements Injector {
 
     private @Nullable Constructor<?> getInjectConstructor(Class<?> type) {
         for (final Constructor<?> ctor : Reflect.getConstructors(type)) {
-            if (ctor.isAnnotationPresent(Inject.class)) {
+            if (hasAnnotation(ctor.getAnnotations(), Inject.class)) {
                 return ctor;
             }
         }
@@ -199,6 +199,15 @@ class InjectorImpl implements Injector {
         }
 
         return args;
+    }
+
+    private boolean hasAnnotation(Annotation[] annotations, Class<? extends Annotation> type) {
+        for (final Annotation annotation : annotations) {
+            if (annotation.annotationType() == type || annotation.annotationType().isAnnotationPresent(type)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
