@@ -339,6 +339,21 @@
   
 
     
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="examples/" class="md-nav__link">
+        Examples
+      </a>
+    </li>
+  
+
+    
   </ul>
 </nav>
                   </div>
@@ -378,7 +393,14 @@
 <span class="normal">15</span>
 <span class="normal">16</span>
 <span class="normal">17</span>
-<span class="normal">18</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="nt">&lt;repositories&gt;</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="nt">&lt;repositories&gt;</span>
     <span class="nt">&lt;repository&gt;</span>
         <span class="nt">&lt;id&gt;</span>lusory-repo-releases<span class="nt">&lt;/id&gt;</span>
         <span class="nt">&lt;url&gt;</span>https://repo.lusory.dev/releases<span class="nt">&lt;/url&gt;</span>
@@ -393,6 +415,13 @@
     <span class="nt">&lt;dependency&gt;</span>
         <span class="nt">&lt;groupId&gt;</span>me.lusory.toothpick<span class="nt">&lt;/groupId&gt;</span>
         <span class="nt">&lt;artifactId&gt;</span>core<span class="nt">&lt;/artifactId&gt;</span>
+        <span class="nt">&lt;version&gt;</span>0.0.1-SNAPSHOT<span class="nt">&lt;/version&gt;</span>
+    <span class="nt">&lt;/dependency&gt;</span>
+
+    <span class="cm">&lt;!-- optional kotlin extensions (transitively pulls in core) --&gt;</span>
+    <span class="nt">&lt;dependency&gt;</span>
+        <span class="nt">&lt;groupId&gt;</span>me.lusory.toothpick<span class="nt">&lt;/groupId&gt;</span>
+        <span class="nt">&lt;artifactId&gt;</span>kotlin<span class="nt">&lt;/artifactId&gt;</span>
         <span class="nt">&lt;version&gt;</span>0.0.1-SNAPSHOT<span class="nt">&lt;/version&gt;</span>
     <span class="nt">&lt;/dependency&gt;</span>
 <span class="nt">&lt;/dependencies&gt;</span>
@@ -410,7 +439,10 @@
 <span class="normal"> 8</span>
 <span class="normal"> 9</span>
 <span class="normal">10</span>
-<span class="normal">11</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">repositories</span> <span class="o">{</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">repositories</span> <span class="o">{</span>
     <span class="n">maven</span> <span class="o">{</span>
         <span class="n">url</span> <span class="s1">&#39;https://repo.lusory.dev/releases&#39;</span>
     <span class="o">}</span>
@@ -420,22 +452,31 @@
 <span class="o">}</span>
 <span class="n">dependencies</span> <span class="o">{</span>
     <span class="n">implementation</span> <span class="s1">&#39;me.lusory.toothpick:core:0.0.1-SNAPSHOT&#39;</span>
+
+    <span class="c1">// optional kotlin extensions (transitively pulls in core)</span>
+    <span class="n">implementation</span> <span class="s1">&#39;me.lusory.toothpick:kotlin:0.0.1-SNAPSHOT&#39;</span>
 <span class="o">}</span>
 </code></pre></div>
 </td></tr></table>
 <h4 id="kotlin-dsl">Kotlin DSL<a class="headerlink" href="#kotlin-dsl" title="Permanent link">&para;</a></h4>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
-<span class="normal">2</span>
-<span class="normal">3</span>
-<span class="normal">4</span>
-<span class="normal">5</span>
-<span class="normal">6</span>
-<span class="normal">7</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">repositories</span> <span class="p">{</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">repositories</span> <span class="p">{</span>
     <span class="n">maven</span><span class="p">(</span><span class="s">&quot;https://repo.lusory.dev/releases&quot;</span><span class="p">)</span>
     <span class="n">maven</span><span class="p">(</span><span class="s">&quot;https://repo.lusory.dev/snapshots&quot;</span><span class="p">)</span>
 <span class="p">}</span>
 <span class="n">dependencies</span> <span class="p">{</span>
     <span class="n">implementation</span><span class="p">(</span><span class="s">&quot;me.lusory.toothpick:core:0.0.1-SNAPSHOT&quot;</span><span class="p">)</span>
+
+    <span class="c1">// optional kotlin extensions (transitively pulls in core)</span>
+    <span class="n">implementation</span><span class="p">(</span><span class="s">&quot;me.lusory.toothpick:kotlin:0.0.1-SNAPSHOT&quot;</span><span class="p">)</span>
 <span class="p">}</span>
 </code></pre></div>
 </td></tr></table>
@@ -445,7 +486,7 @@
   <small>
     
       Last update:
-      2022-03-31
+      2022-04-02
     
   </small>
 </div>
@@ -463,6 +504,26 @@
       </main>
       
         <footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+      
+        
+        <a href="examples/" class="md-footer__link md-footer__link--next" aria-label="Next: Examples" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Examples
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
   
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">

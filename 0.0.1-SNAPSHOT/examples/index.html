@@ -8,19 +8,21 @@
       
       
       
-      <link rel="icon" href="/0.0.1-SNAPSHOT/assets/icon.png">
+        <link rel="canonical" href="http://localhost:8000/0.0.1-SNAPSHOT/examples/">
+      
+      <link rel="icon" href="../assets/icon.png">
       <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.2.8">
     
     
       
-        <title>toothpick</title>
+        <title>Examples - toothpick</title>
       
     
     
-      <link rel="stylesheet" href="/0.0.1-SNAPSHOT/assets/stylesheets/main.644de097.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.644de097.min.css">
       
         
-        <link rel="stylesheet" href="/0.0.1-SNAPSHOT/assets/stylesheets/palette.e6a45f82.min.css">
+        <link rel="stylesheet" href="../assets/stylesheets/palette.e6a45f82.min.css">
         
       
     
@@ -35,7 +37,7 @@
       
     
     
-    <script>__md_scope=new URL("/0.0.1-SNAPSHOT",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -62,6 +64,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#examples" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -86,9 +93,9 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="/0.0.1-SNAPSHOT/." title="toothpick" class="md-header__button md-logo" aria-label="toothpick" data-md-component="logo">
+    <a href=".." title="toothpick" class="md-header__button md-logo" aria-label="toothpick" data-md-component="logo">
       
-  <img src="/0.0.1-SNAPSHOT/assets/icon.png" alt="logo">
+  <img src="../assets/icon.png" alt="logo">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -104,7 +111,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              
+              Examples
             
           </span>
         </div>
@@ -207,9 +214,9 @@
 
 <nav class="md-nav md-nav--primary md-nav--integrated" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="/0.0.1-SNAPSHOT/." title="toothpick" class="md-nav__button md-logo" aria-label="toothpick" data-md-component="logo">
+    <a href=".." title="toothpick" class="md-nav__button md-logo" aria-label="toothpick" data-md-component="logo">
       
-  <img src="/0.0.1-SNAPSHOT/assets/icon.png" alt="logo">
+  <img src="../assets/icon.png" alt="logo">
 
     </a>
     toothpick
@@ -237,7 +244,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/0.0.1-SNAPSHOT/." class="md-nav__link">
+      <a href=".." class="md-nav__link">
         Home
       </a>
     </li>
@@ -250,11 +257,72 @@
 
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="/0.0.1-SNAPSHOT/examples/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Examples
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         Examples
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#creating-an-injector" class="md-nav__link">
+    Creating an Injector
+  </a>
+  
+    <nav class="md-nav" aria-label="Creating an Injector">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#java" class="md-nav__link">
+    Java
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kotlin" class="md-nav__link">
+    Kotlin
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -270,8 +338,104 @@
           <div class="md-content" data-md-component="content">
             <article class="md-content__inner md-typeset">
               
-  <h1>404 - Not found</h1>
+                
 
+
+<h1 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">&para;</a></h1>
+<h2 id="creating-an-injector">Creating an Injector<a class="headerlink" href="#creating-an-injector" title="Permanent link">&para;</a></h2>
+<p>An <code>Injector</code> instance can be created with the <code>Injector#of</code> method (invoke operator for Kotlin is available).</p>
+<h3 id="java">Java<a class="headerlink" href="#java" title="Permanent link">&para;</a></h3>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">me.lusory.toothpick.Injector</span><span class="p">;</span>
+
+<span class="c1">// ...</span>
+
+<span class="c1">// dynamically populated injector (no providers by default)</span>
+<span class="kd">final</span> <span class="n">Injector</span> <span class="n">injector</span> <span class="o">=</span> <span class="n">Injector</span><span class="p">.</span><span class="na">of</span><span class="p">();</span>
+
+<span class="c1">// pre-populated injector</span>
+<span class="kd">final</span> <span class="n">Injector</span> <span class="n">injector</span> <span class="o">=</span> <span class="n">Injector</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="k">new</span> <span class="n">Module1</span><span class="p">());</span>
+
+<span class="c1">// ...</span>
+
+<span class="c1">// retrieves a javax.inject.Provider instance,</span>
+<span class="c1">// which instantiates the Module1 class with the no-arg or @javax.inject.Inject-annotated constructor,</span>
+<span class="c1">// following the dependency chain to satisfy the dependencies</span>
+<span class="n">injector</span><span class="p">.</span><span class="na">provider</span><span class="p">(</span><span class="n">Module1</span><span class="p">.</span><span class="na">class</span><span class="p">);</span>
+
+<span class="c1">// equals to injector.provider(Module1.class).get()</span>
+<span class="n">injector</span><span class="p">.</span><span class="na">instance</span><span class="p">(</span><span class="n">Module1</span><span class="p">.</span><span class="na">class</span><span class="p">);</span>
+</code></pre></div>
+</td></tr></table>
+<h3 id="kotlin">Kotlin<a class="headerlink" href="#kotlin" title="Permanent link">&para;</a></h3>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">me.lusory.toothpick.Injector</span>
+
+<span class="c1">// ...</span>
+
+<span class="c1">// dynamically populated injector (no providers by default)</span>
+<span class="n">val</span> <span class="n">injector</span> <span class="o">=</span> <span class="n">Injector</span><span class="p">()</span>
+
+<span class="c1">// pre-populated injector</span>
+<span class="n">val</span> <span class="n">injector</span> <span class="o">=</span> <span class="n">Injector</span><span class="p">(</span><span class="n">Module1</span><span class="p">())</span>
+
+<span class="c1">// ...</span>
+
+<span class="c1">// retrieves a javax.inject.Provider instance,</span>
+<span class="c1">// which instantiates the Module1 class with the no-arg or @javax.inject.Inject-annotated constructor,</span>
+<span class="c1">// following the dependency chain to satisfy the dependencies</span>
+<span class="n">injector</span><span class="p">.</span><span class="na">provider</span><span class="p">(</span><span class="n">Module1</span><span class="p">::</span><span class="kd">class</span><span class="err">)</span>
+
+<span class="err">//</span> <span class="nc">equals</span> <span class="n">to</span> <span class="n">injector</span><span class="p">.</span><span class="na">provider</span><span class="p">(</span><span class="n">Module1</span><span class="p">.</span><span class="na">class</span><span class="p">).</span><span class="na">get</span><span class="p">()</span>
+<span class="n">injector</span><span class="o">[</span><span class="n">Module1</span><span class="p">::</span><span class="kd">class</span><span class="err">]</span>
+</code></pre></div>
+</td></tr></table>
+
+  <hr>
+<div class="md-source-file">
+  <small>
+    
+      Last update:
+      2022-04-02
+    
+  </small>
+</div>
+
+              
             </article>
           </div>
         </div>
@@ -284,6 +448,26 @@
       </main>
       
         <footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        
+        <a href=".." class="md-footer__link md-footer__link--prev" aria-label="Previous: Home" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Home
+            </div>
+          </div>
+        </a>
+      
+      
+    </nav>
   
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">
@@ -322,10 +506,10 @@
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": "/0.0.1-SNAPSHOT", "features": ["navigation.instant", "navigation.tracking", "navigation.expand", "navigation.indexes", "toc.integrate", "navigation.top"], "search": "/0.0.1-SNAPSHOT/assets/javascripts/workers/search.5e67fbfe.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "version": {"default": "latest", "provider": "mike"}}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.instant", "navigation.tracking", "navigation.expand", "navigation.indexes", "toc.integrate", "navigation.top"], "search": "../assets/javascripts/workers/search.5e67fbfe.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "version": {"default": "latest", "provider": "mike"}}</script>
     
     
-      <script src="/0.0.1-SNAPSHOT/assets/javascripts/bundle.c44cc438.min.js"></script>
+      <script src="../assets/javascripts/bundle.c44cc438.min.js"></script>
       
     
   </body>
