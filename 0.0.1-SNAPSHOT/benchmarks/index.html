@@ -8,19 +8,21 @@
       
       
       
-      <link rel="icon" href="/0.0.1-SNAPSHOT/assets/icon.png">
+        <link rel="canonical" href="http://localhost:8000/0.0.1-SNAPSHOT/benchmarks/">
+      
+      <link rel="icon" href="../assets/icon.png">
       <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.2.8">
     
     
       
-        <title>toothpick</title>
+        <title>Benchmarks - toothpick</title>
       
     
     
-      <link rel="stylesheet" href="/0.0.1-SNAPSHOT/assets/stylesheets/main.644de097.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.644de097.min.css">
       
         
-        <link rel="stylesheet" href="/0.0.1-SNAPSHOT/assets/stylesheets/palette.e6a45f82.min.css">
+        <link rel="stylesheet" href="../assets/stylesheets/palette.e6a45f82.min.css">
         
       
     
@@ -35,7 +37,7 @@
       
     
     
-    <script>__md_scope=new URL("/0.0.1-SNAPSHOT",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -62,6 +64,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#benchmarks" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -86,9 +93,9 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="/0.0.1-SNAPSHOT/." title="toothpick" class="md-header__button md-logo" aria-label="toothpick" data-md-component="logo">
+    <a href=".." title="toothpick" class="md-header__button md-logo" aria-label="toothpick" data-md-component="logo">
       
-  <img src="/0.0.1-SNAPSHOT/assets/icon.png" alt="logo">
+  <img src="../assets/icon.png" alt="logo">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -104,7 +111,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              
+              Benchmarks
             
           </span>
         </div>
@@ -207,9 +214,9 @@
 
 <nav class="md-nav md-nav--primary md-nav--integrated" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="/0.0.1-SNAPSHOT/." title="toothpick" class="md-nav__button md-logo" aria-label="toothpick" data-md-component="logo">
+    <a href=".." title="toothpick" class="md-nav__button md-logo" aria-label="toothpick" data-md-component="logo">
       
-  <img src="/0.0.1-SNAPSHOT/assets/icon.png" alt="logo">
+  <img src="../assets/icon.png" alt="logo">
 
     </a>
     toothpick
@@ -237,7 +244,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/0.0.1-SNAPSHOT/." class="md-nav__link">
+      <a href=".." class="md-nav__link">
         Home
       </a>
     </li>
@@ -252,7 +259,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/0.0.1-SNAPSHOT/examples/" class="md-nav__link">
+      <a href="../examples/" class="md-nav__link">
         Examples
       </a>
     </li>
@@ -265,11 +272,21 @@
 
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="/0.0.1-SNAPSHOT/benchmarks/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         Benchmarks
       </a>
+      
     </li>
   
 
@@ -285,8 +302,84 @@
           <div class="md-content" data-md-component="content">
             <article class="md-content__inner md-typeset">
               
-  <h1>404 - Not found</h1>
+                
 
+
+<h1 id="benchmarks">Benchmarks<a class="headerlink" href="#benchmarks" title="Permanent link">&para;</a></h1>
+<p>Benchmarking is done via the Java Microbenchmark Harness (JMH), two other popular DI frameworks are included for comparison:</p>
+<ul>
+<li><a href="https://github.com/zsoltherpai/feather">Feather</a></li>
+<li><a href="https://github.com/google/guice">Guice</a></li>
+</ul>
+<p>The benchmark source code can be viewed <a href="https://github.com/lusory/toothpick/blob/master/core/src/jmh/java/me/lusory/toothpick/jmh/InjectorBenchmarkTest.java">here</a>.
+If you want to benchmark yourself, run the <code>jmh</code> Gradle task (<code>./gradlew jmh</code>, may take around 20 minutes to complete).</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code># ref: 818f57ba5fe0568a31501b641486645454a2fc57
+
+# Warmup: 5 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+
+Result &quot;me.lusory.toothpick.jmh.InjectorBenchmarkTest.injectFeather&quot;:
+  2292110,973 ±(99.9%) 23716,448 ops/s [Average]
+  (min, avg, max) = (2215965,796, 2292110,973, 2342697,310), stdev = 31660,779
+  CI (99.9%): [2268394,525, 2315827,420] (assumes normal distribution)
+
+Result &quot;me.lusory.toothpick.jmh.InjectorBenchmarkTest.injectGuice&quot;:
+  64629,688 ±(99.9%) 2341,572 ops/s [Average]
+  (min, avg, max) = (59531,646, 64629,688, 70265,624), stdev = 3125,932
+  CI (99.9%): [62288,115, 66971,260] (assumes normal distribution)
+
+Result &quot;me.lusory.toothpick.jmh.InjectorBenchmarkTest.injectToothpick&quot;:
+  418040,166 ±(99.9%) 25708,211 ops/s [Average]
+  (min, avg, max) = (370046,111, 418040,166, 470898,187), stdev = 34319,726
+  CI (99.9%): [392331,955, 443748,378] (assumes normal distribution)
+
+Benchmark                               Mode  Cnt        Score       Error  Units
+InjectorBenchmarkTest.injectFeather    thrpt   25  2292110,973 ± 23716,448  ops/s
+InjectorBenchmarkTest.injectGuice      thrpt   25    64629,688 ±  2341,572  ops/s
+InjectorBenchmarkTest.injectToothpick  thrpt   25   418040,166 ± 25708,211  ops/s
+</code></pre></div>
+</td></tr></table>
+
+  <hr>
+<div class="md-source-file">
+  <small>
+    
+      Last update:
+      2022-04-02
+    
+  </small>
+</div>
+
+              
             </article>
           </div>
         </div>
@@ -299,6 +392,26 @@
       </main>
       
         <footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        
+        <a href="../examples/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Examples" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Examples
+            </div>
+          </div>
+        </a>
+      
+      
+    </nav>
   
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">
@@ -337,10 +450,10 @@
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": "/0.0.1-SNAPSHOT", "features": ["navigation.instant", "navigation.tracking", "navigation.expand", "navigation.indexes", "toc.integrate", "navigation.top"], "search": "/0.0.1-SNAPSHOT/assets/javascripts/workers/search.5e67fbfe.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "version": {"default": "latest", "provider": "mike"}}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.instant", "navigation.tracking", "navigation.expand", "navigation.indexes", "toc.integrate", "navigation.top"], "search": "../assets/javascripts/workers/search.5e67fbfe.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "version": {"default": "latest", "provider": "mike"}}</script>
     
     
-      <script src="/0.0.1-SNAPSHOT/assets/javascripts/bundle.c44cc438.min.js"></script>
+      <script src="../assets/javascripts/bundle.c44cc438.min.js"></script>
       
     
   </body>
