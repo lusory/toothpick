@@ -24,6 +24,13 @@ toothpick is a simple, lightweight dependency injection framework ([JSR-330](htt
         <artifactId>core</artifactId>
         <version>LATEST_VERSION_HERE</version>
     </dependency>
+
+    <!-- optional kotlin extensions (transitively pulls in core) -->
+    <dependency>
+        <groupId>me.lusory.toothpick</groupId>
+        <artifactId>kotlin</artifactId>
+        <version>LATEST_VERSION_HERE</version>
+    </dependency>
 </dependencies>
 ```
 
@@ -40,6 +47,9 @@ repositories {
 }
 dependencies {
     implementation 'me.lusory.toothpick:core:LATEST_VERSION_HERE'
+
+    // optional kotlin extensions (transitively pulls in core)
+    implementation 'me.lusory.toothpick:kotlin:LATEST_VERSION_HERE'
 }
 ```
 
@@ -51,5 +61,8 @@ repositories {
 }
 dependencies {
     implementation("me.lusory.toothpick:core:LATEST_VERSION_HERE")
+
+    // optional kotlin extensions (transitively pulls in core)
+    implementation("me.lusory.toothpick:kotlin:LATEST_VERSION_HERE")
 }
 ```
