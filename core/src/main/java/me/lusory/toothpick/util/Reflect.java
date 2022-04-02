@@ -92,4 +92,11 @@ public class Reflect {
 
         return c;
     }
+
+    public Class<?> typeToClass(Type type) {
+        if (type instanceof ParameterizedType) {
+            return (Class<?>) ((ParameterizedType) type).getRawType();
+        }
+        return (Class<?>) type;
+    }
 }

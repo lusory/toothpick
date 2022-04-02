@@ -47,58 +47,10 @@ class InjectorImpl implements Injector {
             final Class<? extends Annotation> qualifierType = qualifier != null ? qualifier.annotationType() : null;
             final String qualifierName = qualifierType == Named.class ? ((Named) qualifier).value() : null;
 
-            Provider<?> moduleProvider;
+            final Provider<?> moduleProvider = module instanceof Class<?>
+                    ? makeProvider(moduleClass, qualifierName, qualifierType)
+                    : new ProviderImpl<>(qualifierName, moduleClass, qualifierType, () -> module, true);
 
-            if (module instanceof Class<?>) {
-                try {
-                    final Constructor<?> moduleCtor = moduleClass.getConstructor();
-
-                    moduleProvider = new ProviderImpl<>(
-                            qualifierName,
-                            moduleClass,
-                            qualifierType,
-                            () -> {
-                                try {
-                                    return moduleCtor.newInstance();
-                                } catch (Exception e) {
-                                    throw new InjectorException("Could not instantiate module " + moduleClass.getName(), e);
-                                }
-                            },
-                            true
-                    );
-                } catch (NoSuchMethodException ignored) {
-                    final Constructor<?> moduleCtor = Assertions.nonNullElseThrow(
-                            getInjectConstructor(moduleClass),
-                            () -> new InjectorException("Could not find @Inject or no-arg constructor for " + moduleClass.getName())
-                    );
-
-                    moduleCtor.setAccessible(true);
-
-                    moduleProvider = new ProviderImpl<>(
-                            qualifierName,
-                            moduleClass,
-                            qualifierType,
-                            () -> {
-                                final Object[] args = resolveParams(moduleCtor);
-
-                                try {
-                                    return moduleCtor.newInstance(args);
-                                } catch (Exception e) {
-                                    throw new DependencyResolveException(e);
-                                }
-                            },
-                            true
-                    );
-                }
-            } else {
-                moduleProvider = new ProviderImpl<>(
-                        qualifierName,
-                        moduleClass,
-                        qualifierType,
-                        () -> module,
-                        true
-                );
-            }
             providers.add(moduleProvider);
 
             // discover @Provides annotated methods
@@ -142,6 +94,55 @@ class InjectorImpl implements Injector {
                     )
             );
         }
+    }
+
+    private Provider<?> makeProvider(Class<?> moduleClass, @Nullable String qualifierName, @Nullable Class<? extends Annotation> qualifierType) {
+        Provider<?> moduleProvider;
+
+        try {
+            final Constructor<?> moduleCtor = moduleClass.getConstructor();
+
+            moduleCtor.setAccessible(true);
+
+            moduleProvider = new ProviderImpl<>(
+                    qualifierName,
+                    moduleClass,
+                    qualifierType,
+                    () -> {
+                        try {
+                            return moduleCtor.newInstance();
+                        } catch (Exception e) {
+                            throw new InjectorException("Could not instantiate module " + moduleClass.getName(), e);
+                        }
+                    },
+                    true
+            );
+        } catch (NoSuchMethodException ignored) {
+            final Constructor<?> moduleCtor = Assertions.nonNullElseThrow(
+                    getInjectConstructor(moduleClass),
+                    () -> new InjectorException("Could not find @Inject or no-arg constructor for " + moduleClass.getName())
+            );
+
+            moduleCtor.setAccessible(true);
+
+            moduleProvider = new ProviderImpl<>(
+                    qualifierName,
+                    moduleClass,
+                    qualifierType,
+                    () -> {
+                        final Object[] args = resolveParams(moduleCtor);
+
+                        try {
+                            return moduleCtor.newInstance(args);
+                        } catch (Exception e) {
+                            throw new DependencyResolveException(e);
+                        }
+                    },
+                    true
+            );
+        }
+
+        return moduleProvider;
     }
 
     private Annotation getQualifier(Annotation[] annotations) {
@@ -204,7 +205,7 @@ class InjectorImpl implements Injector {
     @SuppressWarnings("unchecked")
     public <T> Provider<T> provider(Type type, @Nullable String name, @Nullable Class<? extends Annotation> qualifier) {
         final Class<? extends Annotation> qualifier0 = name != null && qualifier == null ? Named.class : qualifier;
-        return (Provider<T>) Assertions.nonNullElseThrow(
+        return (Provider<T>) Assertions.nonNullElse(
                 getProvider(p -> {
                     if (qualifier0 != null) {
                         return Reflect.isTypeEqual(p.getType(), type)
@@ -213,7 +214,19 @@ class InjectorImpl implements Injector {
                     }
                     return Reflect.isTypeEqual(p.getType(), type);
                 }),
-                () -> new DependencyResolveException("Provider not found for " + type.getTypeName())
+                () -> {
+                    final Class<?> moduleClass = Reflect.typeToClass(type);
+                    final Provider<?> provider = makeProvider(moduleClass, name, qualifier0);
+
+                    providers.add(provider);
+
+                    // discover @Provides annotated methods
+                    for (final Method method : Reflect.getMethods(moduleClass)) {
+                        populateMethod(provider::get, method);
+                    }
+
+                    return provider;
+                }
         );
     }
 }

@@ -28,7 +28,7 @@ import org.openjdk.jmh.annotations.Benchmark;
 public class InjectorBenchmarkTest {
     @Benchmark
     public void injectToothpick() {
-        final Injector injector = Injector.of(ExampleClass3.class, ExampleClass2.class, ExampleClass1.class);
+        final Injector injector = Injector.of();
         injector.instance(ExampleClass1.class);
     }
 
