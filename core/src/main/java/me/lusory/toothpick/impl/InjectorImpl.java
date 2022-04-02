@@ -15,8 +15,10 @@
  * limitations under the License.
  */
 
-package me.lusory.toothpick;
+package me.lusory.toothpick.impl;
 
+import me.lusory.toothpick.Injector;
+import me.lusory.toothpick.annotations.InternalInject;
 import me.lusory.toothpick.annotations.Provides;
 import me.lusory.toothpick.exceptions.DependencyResolveException;
 import me.lusory.toothpick.exceptions.DuplicateProviderException;
@@ -32,10 +34,10 @@ import java.util.*;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 
-class InjectorImpl implements Injector {
+public class InjectorImpl implements Injector {
     private final Set<Provider<?>> providers = new HashSet<>();
 
-    protected InjectorImpl(Collection<Object> modules) {
+    public InjectorImpl(Collection<Object> modules) {
         populate(modules);
     }
 
@@ -165,7 +167,7 @@ class InjectorImpl implements Injector {
 
     private @Nullable Constructor<?> getInjectConstructor(Class<?> type) {
         for (final Constructor<?> ctor : Reflect.getConstructors(type)) {
-            if (hasAnnotation(ctor.getAnnotations(), Inject.class)) {
+            if (ctor.isAnnotationPresent(Inject.class) || hasAnnotation(ctor.getAnnotations(), InternalInject.class)) {
                 return ctor;
             }
         }

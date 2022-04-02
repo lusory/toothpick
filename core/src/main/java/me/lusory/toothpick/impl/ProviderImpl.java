@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package me.lusory.toothpick;
+package me.lusory.toothpick.impl;
 
 import lombok.*;
 import org.jetbrains.annotations.Nullable;
@@ -28,8 +28,8 @@ import java.util.function.Supplier;
 @Getter
 @ToString
 @EqualsAndHashCode
-@RequiredArgsConstructor(access = AccessLevel.PROTECTED)
-class ProviderImpl<T> implements Provider<T> {
+@RequiredArgsConstructor
+public class ProviderImpl<T> implements Provider<T> {
     @Nullable
     private final String name;
     private final Type type;

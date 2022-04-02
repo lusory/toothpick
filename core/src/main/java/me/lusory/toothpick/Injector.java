@@ -17,6 +17,7 @@
 
 package me.lusory.toothpick;
 
+import me.lusory.toothpick.impl.InjectorImpl;
 import org.jetbrains.annotations.Nullable;
 
 import javax.inject.Named;
