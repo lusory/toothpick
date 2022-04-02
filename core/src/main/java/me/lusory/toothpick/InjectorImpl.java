@@ -17,7 +17,9 @@
 
 package me.lusory.toothpick;
 
+import me.lusory.toothpick.annotations.Conditional;
 import me.lusory.toothpick.annotations.Provides;
+import me.lusory.toothpick.exceptions.ConditionException;
 import me.lusory.toothpick.exceptions.DependencyResolveException;
 import me.lusory.toothpick.exceptions.DuplicateProviderException;
 import me.lusory.toothpick.exceptions.InjectorException;
@@ -43,6 +45,10 @@ class InjectorImpl implements Injector {
         for (final Object module : modules) {
             final Class<?> moduleClass = module instanceof Class<?> ? (Class<?>) module : module.getClass();
 
+            if (!shouldRegister(moduleClass)) {
+                continue;
+            }
+
             final Annotation qualifier = getQualifier(moduleClass.getAnnotations());
             final Class<? extends Annotation> qualifierType = qualifier != null ? qualifier.annotationType() : null;
             final String qualifierName = qualifierType == Named.class ? ((Named) qualifier).value() : null;
@@ -62,6 +68,10 @@ class InjectorImpl implements Injector {
 
     private void populateMethod(Supplier<Object> module, Method method) {
         if (method.isAnnotationPresent(Provides.class)) {
+            if (!shouldRegister(method)) {
+                return;
+            }
+
             method.setAccessible(true);
 
             final Type returnType = method.getGenericReturnType();
@@ -201,6 +211,72 @@ class InjectorImpl implements Injector {
         return args;
     }
 
+    private boolean shouldRegister(Class<?> type) {
+        for (final Annotation annotation : type.getAnnotations()) {
+            if (annotation.annotationType() == Conditional.class || annotation.annotationType().isAnnotationPresent(Conditional.class)) {
+                final Conditional condition = annotation.annotationType() == Conditional.class
+                        ? (Conditional) annotation
+                        : annotation.annotationType().getAnnotation(Conditional.class);
+
+                return matchesCondition(type, condition);
+            }
+        }
+        return true;
+    }
+
+    private boolean shouldRegister(Method type) {
+        for (final Annotation annotation : type.getAnnotations()) {
+            if (annotation.annotationType() == Conditional.class || annotation.annotationType().isAnnotationPresent(Conditional.class)) {
+                final Conditional condition = annotation.annotationType() == Conditional.class
+                        ? (Conditional) annotation
+                        : annotation.annotationType().getAnnotation(Conditional.class);
+
+                return matchesCondition(type.getReturnType(), condition);
+            }
+        }
+        return true;
+    }
+
+    private boolean matchesCondition(Class<?> type, Conditional condition) {
+        boolean requiresType = false;
+        Method method = null;
+        try {
+            method = condition.condition().getDeclaredMethod(condition.method());
+        } catch (NoSuchMethodException ignored) {
+            try {
+                method = condition.condition().getDeclaredMethod(condition.method(), type);
+                requiresType = true;
+            } catch (NoSuchMethodException ignored1) {
+                // ignored
+            }
+        }
+
+        if (method == null) {
+            throw new ConditionException(
+                    "Method " + condition.method() + " in class " + condition.condition().getName() + " not found"
+            );
+        }
+        if (!Modifier.isStatic(method.getModifiers())) {
+            throw new ConditionException(
+                    "Method " + condition.method() + " in class " + condition.condition().getName() + " is not static"
+            );
+        }
+        if (method.getReturnType() != boolean.class) {
+            throw new ConditionException(
+                    "Method " + condition.method() + " in class " + condition.condition().getName() + " doesn't return boolean"
+            );
+        }
+
+        try {
+            if (requiresType) {
+                return (boolean) method.invoke(null, type);
+            }
+            return (boolean) method.invoke(null);
+        } catch (IllegalAccessException | InvocationTargetException e) {
+            throw new ConditionException(e);
+        }
+    }
+
     @Override
     @SuppressWarnings("unchecked")
     public <T> Provider<T> provider(Type type, @Nullable String name, @Nullable Class<? extends Annotation> qualifier) {
@@ -216,6 +292,11 @@ class InjectorImpl implements Injector {
                 }),
                 () -> {
                     final Class<?> moduleClass = Reflect.typeToClass(type);
+
+                    if (!shouldRegister(moduleClass)) {
+                        throw new DependencyResolveException("Could not resolve " + moduleClass.getName() + " (conditional didn't match)");
+                    }
+
                     final Provider<?> provider = makeProvider(moduleClass, name, qualifier0);
 
                     providers.add(provider);
